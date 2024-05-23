@@ -44,7 +44,8 @@ def main():
             
             print(f"File {file_name} is converted and saved as {csv_file_name}")
 
-    # TODO: remove files from uploads folder
+            os.remove(file_path) # OR move the excel file to backup folder?
+            print(f"File {file_name} is removed from uploads folder")
 
     print("All files are processed.")
 
