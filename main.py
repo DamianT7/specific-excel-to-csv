@@ -22,20 +22,26 @@ def main():
     Path("./uploads").mkdir(parents=True, exist_ok=True)
     Path("./done").mkdir(parents=True, exist_ok=True)
 
+    isProduction = 0
+    isProductionInput = input("Is it for production? (y/n) ")
+    if(isProductionInput.casefold() == "y"):
+        isProduction = 1
+
     for file_name in os.listdir("./uploads"):
         if file_name.endswith(".xlsx") or file_name.endswith(".xls"):
             file_path = os.path.join("./uploads", file_name)
             
             print(f"Processing file: {file_name}")
+
             batch_id = input("What is the batch ID? ")
             supplier_id = input("What is the supplier ID? ")
-            
+
             df = pd.read_excel(file_path, header=None)
             
             df.columns = ['code']
-            
-            df['batch_id'] = batch_id
             df['supplier_id'] = supplier_id
+            df['batch_id'] = batch_id
+            df['isProduction'] = isProduction
             
             csv_file_name = os.path.splitext(file_name)[0] + ".csv"
             csv_file_path = os.path.join("./done", csv_file_name)
